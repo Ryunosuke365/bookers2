@@ -1,0 +1,41 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-3">
+      <%= render "users/info_card", user: current_user %>
+      <%= render "books/floating_form", book: @new_book %>
+    </div>
+
+    <div class="col-md-8 offset-md-1 pt-3">
+      <h2>Books</h2>
+      <table class="table table-hover table-inverse">
+        <thead>
+          <tr>
+            <th style="width: 10%;"></th>
+            <th style="width: 20%;">Title</th>
+            <th style="width: 70%;">Opinion</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @books.each do |book| %>
+            <% u = book.user %>
+            <tr>
+              <td>
+                <%= link_to user_path(u) do %>
+                  <% if u&.profile_image&.attached? %>
+                    <%= image_tag u.profile_image, size: "60x60", alt: u.name %>
+                  <% else %>
+                    <%= image_tag "no_image.jpg", size: "60x60", alt: "No image" %>
+                  <% end %>
+                <% end %>
+              </td>
+              <td><%= link_to book.title, book_path(book) %></td>
+              <td><%= book.body %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+
+      <%= paginate @books if defined?(paginate) %>
+    </div>
+  </div>
+</div>

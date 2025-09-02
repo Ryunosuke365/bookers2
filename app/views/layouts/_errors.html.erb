@@ -1,0 +1,18 @@
+<% unless controller_path == 'devise/sessions' %>
+  <% targets = [] %>
+  <% targets << @book if defined?(@book) && @book && @book.errors.any? %>
+  <% targets << @new_book if defined?(@new_book) && @new_book && @new_book.errors.any? %>
+  <% targets << @user if defined?(@user) && @user && @user.errors.any? %>
+  <% targets << resource if defined?(resource) && resource && resource.respond_to?(:errors) && resource.errors.any? %>
+  <% obj = targets.first %>
+  <% if obj %>
+    <div>
+      <h3><%= pluralize(obj.errors.count, 'error') %> prohibited this <%= obj.class.model_name.human.downcase %> from being saved:</h3>
+      <ul>
+        <% obj.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+<% end %>
